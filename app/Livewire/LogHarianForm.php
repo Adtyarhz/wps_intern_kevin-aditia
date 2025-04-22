@@ -12,8 +12,8 @@ class LogHarianForm extends Component
     use WithFileUploads;
 
     public $tanggal;
-    public $isi_log;
-    public $bukti;
+    public $deskripsi;
+    public $file_bukti;
 
     protected $rules = [
         'tanggal' => 'required|date',
@@ -25,12 +25,12 @@ class LogHarianForm extends Component
     {
         $this->validate();
 
-        $path = $this->bukti ? $this->bukti->store('file_bukti-log', 'public') : null;
+        $path = $this->file_bukti ? $this->file_bukti->store('file_bukti-log', 'public') : null;
 
         LogHarian::create([
             'user_id' => Auth::id(),
             'tanggal' => $this->tanggal,
-            'deskripsi' => $this->isi_log,
+            'deskripsi' => $this->deskripsi,
             'file_bukti' => $path,
             'status' => 'pending',
         ]);
