@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use App\Models\LogHarian;
 use Livewire\Component;
@@ -38,7 +38,7 @@ class LogHarianForm extends Component
         session()->flash('success', 'Log harian berhasil disimpan!');
         $this->reset(['tanggal', 'deskripsi', 'file_bukti']);
     }
-
+    
     public function render()
     {
         return view('livewire.log-harian-form');

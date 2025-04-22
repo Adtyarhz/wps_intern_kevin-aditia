@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\LogHarian;
@@ -32,7 +32,7 @@ class VerifikasiLogHarian extends Component
 
         $this->mount();
     }
-
+    
     public function render()
     {
         return view('livewire.verifikasi-log-harian');
