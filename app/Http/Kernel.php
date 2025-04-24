@@ -32,10 +32,10 @@ class Kernel extends HttpKernel
     ];
 
     protected $routeMiddleware = [
+        'role' => \App\Http\Middleware\Role::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
-        'role' => \App\Http\Middleware\RoleMiddleware::class,
     ];
 }

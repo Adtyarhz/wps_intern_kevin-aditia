@@ -12,6 +12,11 @@ class VerifikasiLogHarian extends Component
 
     public function mount()
     {
+        $allowedRoles = ['direktur', 'manager', 'manager_operasional', 'manager_keuangan'];
+        if (!in_array(Auth::user()->role, $allowedRoles)) {
+            abort(403, 'Unauthorized action.');
+        }
+    
         $subordinateIds = Auth::user()->subordinates()->pluck('id');
         $this->pendingLogs = LogHarian::whereIn('user_id', $subordinateIds)
             ->where('status', 'pending')
