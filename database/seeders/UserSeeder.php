@@ -13,41 +13,41 @@ class UserSeeder extends Seeder
         $direktur = User::create([
             'name' => 'Direktur Utama',
             'email' => 'direktur@example.com',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('12345678'),
             'role' => 'direktur',
-            'parent_id' => null,
+            'supervisor_id' => null,
         ]);
 
         $managerOps = User::create([
             'name' => 'Manager Operasional',
             'email' => 'manager.ops@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'manager',
-            'parent_id' => $direktur->id,
+            'password' => Hash::make('12345678'),
+            'role' => 'manager_operasional',
+            'supervisor_id' => $direktur->id,
         ]);
 
         $managerKeu = User::create([
             'name' => 'Manager Keuangan',
             'email' => 'manager.keu@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'manager',
-            'parent_id' => $direktur->id,
+            'password' => Hash::make('12345678'),
+            'role' => 'manager_keuangan',
+            'supervisor_id' => $direktur->id,
         ]);
 
         User::create([
             'name' => 'Staf Operasional',
             'email' => 'staf.ops@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'staff',
-            'parent_id' => $managerOps->id,
+            'password' => Hash::make('12345678'),
+            'role' => 'staf',
+            'supervisor_id' => $managerOps->id,
         ]);
 
         User::create([
             'name' => 'Staf Keuangan',
             'email' => 'staf.keu@example.com',
-            'password' => Hash::make('password'),
-            'role' => 'staff',
-            'parent_id' => $managerKeu->id,
+            'password' => Hash::make('12345678'),
+            'role' => 'staf',
+            'supervisor_id' => $managerKeu->id,
         ]);
     }
 }

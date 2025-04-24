@@ -13,7 +13,7 @@ class RoleMiddleware
         $user = $request->user();
 
         if (!$user || !in_array($user->role, $roles)) {
-            abort(403, 'Unauthorized.');
+            return redirect()->route('dashboard')->with('error', 'Anda tidak memiliki akses ke halaman ini.');
         }
 
         return $next($request);

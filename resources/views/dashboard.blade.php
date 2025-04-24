@@ -1,31 +1,28 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
+@section('header', __('Dashboard'))
+
+@section('content')
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Dashboard Calendar (untuk atasan) -->
+            @if (auth()->user()->hasRole(['direktur', 'manager_operasional', 'manager_keuangan']))
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4 mb-8">
+                    <livewire:dashboard />
+                </div>
+            @endif
 
+            <!-- Form dan Daftar Log Harian (untuk semua role) -->
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4 mb-8">
-                <livewire:dashboard-calendar />
+                <livewire:log-harian-kelola />
             </div>
 
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
-                <livewire:log-harian-form />
-            </div>
-
-            <div class="mt-6">
-                <livewire:log-harian-list />
-            </div>
-
-        @can('verifikasi-log')
-            <div class="mt-6">
-                <livewire:verifikasi-log-harian />
-            </div>
-        @endcan
-        
+            <!-- Verifikasi Log Harian (hanya untuk atasan) -->
+            @if (auth()->user()->hasRole(['direktur', 'manager_operasional', 'manager_keuangan']))
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4">
+                    <livewire:verifikasi-log-harian />
+                </div>
+            @endif
         </div>
     </div>
-</x-app-layout>
+@endsection

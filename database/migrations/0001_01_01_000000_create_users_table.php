@@ -4,12 +4,9 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateUsersTable extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
@@ -17,18 +14,14 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->enum('role', ['direktur', 'manager_operasional', 'manager_keuangan', 'staf']);
+            $table->unsignedBigInteger('supervisor_id')->nullable();
+            $table->string('profile_photo_path')->nullable();
             $table->rememberToken();
-            
-            $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
-        
-            $table->enum('role', ['direktur', 'manager', 'staff'])->default('staff');
-            $table->unsignedBigInteger('parent_id')->nullable();
-        
             $table->timestamps();
-        
-            $table->foreign('parent_id')->references('id')->on('users')->onDelete('set null');
-        });        
+
+            $table->foreign('supervisor_id')->references('id')->on('users')->onDelete('set null');
+        });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
@@ -46,13 +39,10 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
-};
+}

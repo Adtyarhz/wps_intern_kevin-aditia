@@ -4,37 +4,44 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\LogHarian;
-use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class VerifikasiLogHarian extends Component
 {
-    public $bawahanLogs = [];
+    public $pendingLogs;
 
     public function mount()
     {
-        $bawahanIds = auth()->user()->bawahan()->pluck('id');
-
-        $this->bawahanLogs = LogHarian::with('user')
-            ->whereIn('user_id', $bawahanIds)
+        $subordinateIds = Auth::user()->subordinates()->pluck('id');
+        $this->pendingLogs = LogHarian::whereIn('user_id', $subordinateIds)
+            ->where('status', 'pending')
+            ->with('user')
             ->orderBy('tanggal', 'desc')
             ->get();
     }
 
-    public function verifikasi($logId, $status)
+    public function approve($logId)
     {
         $log = LogHarian::findOrFail($logId);
-
-        if (!in_array($status, ['disetujui', 'ditolak'])) return;
-
-        $log->update(['status' => $status]);
-
-        session()->flash('message', 'Log berhasil diverifikasi.');
-
-        $this->mount();
+        if ($log->user->supervisor_id === Auth::id()) {
+            $log->update(['status' => 'disetujui']);
+            session()->flash('message', 'Log disetujui.');
+            $this->mount();
+        }
     }
-    
+
+    public function reject($logId)
+    {
+        $log = LogHarian::findOrFail($logId);
+        if ($log->user->supervisor_id === Auth::id()) {
+            $log->update(['status' => 'ditolak']);
+            session()->flash('message', 'Log ditolak.');
+            $this->mount();
+        }
+    }
+
     public function render()
     {
-        return view('livewire.verifikasi-log-harian');
+        return view('livewire.verifikasi-log-harian')->layout('layouts.app');
     }
 }
