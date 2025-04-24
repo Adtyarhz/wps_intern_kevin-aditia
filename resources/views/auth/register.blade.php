@@ -14,6 +14,24 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        .welcome-container {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .welcome-container h1 {
+            font-size: 2.7rem;
+            color: #e0e0e0;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 800;
+            margin: 0;
+        }
+
         .glass-wrapper h2 {
             font-size: 2rem;
             margin-bottom: 20px;
@@ -55,8 +73,8 @@
             font-family: "Open Sans", sans-serif;
         }
 
-        .input-field input:focus ~ label,
-        .input-field input:not(:placeholder-shown) ~ label {
+        .input-field input:focus~label,
+        .input-field input:not(:placeholder-shown)~label {
             font-size: 0.8rem;
             top: 10px;
             transform: translateY(-120%);
@@ -107,12 +125,15 @@
             margin-bottom: 1rem;
             color: #f87171;
         }
-
     </style>
 
-    <div class="relative min-h-screen flex items-center justify-center" style="background: url('{{ asset('images/backgrounds/backgorund-office.gif') }}') no-repeat center center; background-size: cover; background-color: #000;">
+    <div class="relative min-h-screen flex items-center justify-center"
+        style="background: url('{{ asset('images/backgrounds/backgorund-office.gif') }}') no-repeat center center; background-size: cover; background-color: #000;">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="glass-wrapper relative z-10">
+            <div class="welcome-container">
+                <h1>Welcome to Daily Log System</h1>
+            </div>
             <h2>Register</h2>
 
             <x-validation-errors class="validation-errors" />
@@ -121,7 +142,8 @@
                 @csrf
 
                 <div class="input-field">
-                    <x-input id="name" type="text" name="name" :value="old('name')" required autofocus placeholder=" " />
+                    <x-input id="name" type="text" name="name" :value="old('name')" required autofocus
+                        placeholder=" " />
                     <x-label for="name" value="{{ __('Name') }}" />
                 </div>
 
@@ -131,25 +153,27 @@
                 </div>
 
                 <div class="input-field">
-                    <x-input id="password" type="password" name="password" required autocomplete="new-password" placeholder=" " />
+                    <x-input id="password" type="password" name="password" required autocomplete="new-password"
+                        placeholder=" " />
                     <x-label for="password" value="{{ __('Password') }}" />
                 </div>
 
                 <div class="input-field">
-                    <x-input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder=" " />
+                    <x-input id="password_confirmation" type="password" name="password_confirmation" required
+                        autocomplete="new-password" placeholder=" " />
                     <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                 </div>
 
                 @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                    <div class="text-left mt-4 text-white text-sm">
-                        <label for="terms" class="flex items-center">
-                            <x-checkbox name="terms" id="terms" required />
-                            <span class="ml-2">{!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'" class="underline text-white">'.__('Terms of Service').'</a>',
-                                'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'" class="underline text-white">'.__('Privacy Policy').'</a>',
-                            ]) !!}</span>
-                        </label>
-                    </div>
+                                <div class="text-left mt-4 text-white text-sm">
+                                    <label for="terms" class="flex items-center">
+                                        <x-checkbox name="terms" id="terms" required />
+                                        <span class="ml-2">{!! __('I agree to the :terms_of_service and :privacy_policy', [
+                        'terms_of_service' => '<a target="_blank" href="' . route('terms.show') . '" class="underline text-white">' . __('Terms of Service') . '</a>',
+                        'privacy_policy' => '<a target="_blank" href="' . route('policy.show') . '" class="underline text-white">' . __('Privacy Policy') . '</a>',
+                    ]) !!}</span>
+                                    </label>
+                                </div>
                 @endif
 
                 <button type="submit" class="mt-6">

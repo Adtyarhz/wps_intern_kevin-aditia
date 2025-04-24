@@ -14,6 +14,24 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
+        .welcome-container {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .welcome-container h1 {
+            font-size: 2.7rem;
+            color: #e0e0e0;
+            font-family: "Open Sans", sans-serif;
+            font-weight: 800;
+            margin: 0;
+        }
+
         .glass-wrapper h2 {
             font-size: 2rem;
             margin-bottom: 20px;
@@ -139,6 +157,9 @@
     <div class="relative min-h-screen flex items-center justify-center" style="background: url('{{ asset('images/backgrounds/backgorund-office.gif') }}') no-repeat center center; background-size: cover; background-color: #000;">
         <div class="absolute inset-0 bg-black opacity-50"></div>
         <div class="glass-wrapper relative z-10">
+            <div class="welcome-container">
+                <h1>Welcome to Daily Log System</h1>
+            </div>
             <h2>Login</h2>
 
             <x-validation-errors class="validation-errors" />
