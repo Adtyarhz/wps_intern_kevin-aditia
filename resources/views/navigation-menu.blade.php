@@ -5,14 +5,18 @@
                 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    @if (auth()->user()->hasRole(['direktur', 'manager_operasional', 'manager_keuangan']))
                     <a href="{{ route('dashboard') }}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('dashboard') ? 'bg-gray-900 text-white' : '' }}">
                         Dashboard
                     </a>
+                    @endif
+                    @if (auth()->user()->hasRole(['staf', 'manager_operasional', 'manager_keuangan']))
                     <a href="{{ route('logs') }}"
                        class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('logs') ? 'bg-gray-900 text-white' : '' }}">
                         Log Harian
                     </a>
+                    @endif
                     @if (auth()->user()->hasRole(['direktur', 'manager_operasional', 'manager_keuangan']))
                         <a href="{{ route('verify-logs') }}"
                            class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium {{ request()->routeIs('verify-logs') ? 'bg-gray-900 text-white' : '' }}">

@@ -19,5 +19,5 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/logs', LogHarianKelola::class)->name('logs');
-    Route::get('/verify-logs', VerifikasiLogHarian::class)->name('verify-logs');
+    Route::get('/verify-logs/{log?}', VerifikasiLogHarian::class)->name('verify-logs');
 });

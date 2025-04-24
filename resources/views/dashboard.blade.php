@@ -13,9 +13,11 @@
             @endif
 
             <!-- Form dan Daftar Log Harian (untuk semua role) -->
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4 mb-8">
-                <livewire:log-harian-kelola />
-            </div>
+            @if (auth()->user()->hasRole(['staf', 'staff_operasional', 'staff_keuangan', 'manager_operasional', 'manager_keuangan']))
+                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-4 mb-8">
+                    <livewire:log-harian-kelola />
+                </div>
+            @endif
 
             <!-- Verifikasi Log Harian (hanya untuk atasan) -->
             @if (auth()->user()->hasRole(['direktur', 'manager_operasional', 'manager_keuangan']))

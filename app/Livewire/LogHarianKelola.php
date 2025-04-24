@@ -15,17 +15,19 @@ class LogHarianKelola extends Component
     public $proof;
     public $logs;
     public $tanggal;
+    public $minDate; // Properti baru untuk tanggal minimum
 
     public function mount()
     {
         $this->logs = LogHarian::where('user_id', Auth::id())->orderBy('tanggal', 'desc')->get();
         $this->tanggal = now()->format('Y-m-d');
+        $this->minDate = now()->format('Y-m-d'); // Set tanggal minimum ke hari ini
     }
 
     public function save()
     {
         $this->validate([
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|date|after_or_equal:' . $this->minDate, // Validasi tambahan
             'description' => 'required|string|max:1000',
             'proof' => 'nullable|file|mimes:jpg,png,pdf|max:2048',
         ]);

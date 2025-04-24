@@ -15,11 +15,9 @@ class Dashboard extends Component
         $user = Auth::user();
         switch ($user->role) {
             case 'direktur':
-                break;
-            case 'manager':
             case 'manager_operasional':
             case 'manager_keuangan':
-                return redirect()->route('verify-logs');
+                break;
             case 'staf':
             case 'staff_operasional':
             case 'staff_keuangan':
@@ -31,17 +29,22 @@ class Dashboard extends Component
                 ]);
         }
 
+        $today = now()->format('Y-m-d');
         $subordinateIds = Auth::user()->subordinates()->pluck('id');
         $logs = LogHarian::whereIn('user_id', $subordinateIds)
             ->where('status', 'pending')
+            ->whereDate('tanggal', $today)
             ->with('user')
             ->get();
 
         $this->events = $logs->map(function ($log) {
             return [
+                'id' => $log->id,
                 'title' => 'Log dari ' . $log->user->name,
                 'start' => $log->tanggal->format('Y-m-d'),
                 'description' => $log->deskripsi,
+                'color' => '#2563eb',
+                'url' => route('verify-logs', ['log' => $log->id]),
             ];
         })->toArray();
     }

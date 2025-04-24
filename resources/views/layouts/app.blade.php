@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Daily Log System') }}</title>
     <link rel="icon" type="image/png" href="{{ asset('iconweb.png') }}">
     @livewireStyles
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -14,13 +14,13 @@
         @include('navigation-menu')
         <header class="bg-white shadow">
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold text-gray-900">{{ $header ?? 'Dashboard' }}</h1>
+                <h1 class="text-3xl font-bold text-gray-900">{{ $header ?? 'Daily Log System' }}</h1>
             </div>
         </header>
         <main>
             <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
                 @if (session('message'))
-                    <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
+                    <div class="bg-green-100 border-l4 border-green-500 text-green-700 p-4 mb-4">
                         {{ session('message') }}
                     </div>
                 @endif
@@ -34,6 +34,7 @@
         </main>
     </div>
     @livewireScripts
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <!-- FullCalendar JS -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.5/main.min.js"></script>
 </body>
 </html>
